@@ -30,26 +30,27 @@ void	Harl::error(void) {
 	std::cout << "This is unacceptable! I want to speak to the manager now." << std::endl;
 }
 
-/* Calles respective function using pointers */
-void	Harl::complain(std::string levels) 
+int	getLevel(std::string level)
 {
-	void (Harl::*complaint[])() =
-	{
-	&Harl::debug,
-	&Harl::info,
-	&Harl::warning,
-	&Harl::error,
-	};
-	std::string level[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+	const std::string	levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+	int					levelNumber = 4;
 
-
-	for (int i = 0; i < 4; ++i) 
+	for (int i = 0; i < 4 && levelNumber == 4; i++)
 	{
-		if (level[i] == levels) 
-		{
-			(this->*complaint[i])();
-			break;
+		if (level == levels[i])
+			levelNumber = i;
 	}
-  }
+	return (levelNumber);
+}
+
+void	Harl::complain(std::string level)
+{
+	const function_p	complains[4] = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
+	int					levelNumber = getLevel(level);
+
+	if (levelNumber < 4)
+		(this->*(complains[levelNumber]))();
+	else
+		std::cout << "[ INVALID ]\nInvalid level. Try again." << std::endl << std::endl;
 }
 

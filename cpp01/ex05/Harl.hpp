@@ -20,4 +20,7 @@ public:
 
 };
 
+typedef void (Harl::*function_p)(void);
+int		getLevel(std::string level);
+
 #endif
