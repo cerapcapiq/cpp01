@@ -33,44 +33,35 @@ void	Harl::error(void)
 	std::cout << "[ERROR]\nThis is unacceptable! I want to speak to the manager now." << std::endl;
 }
 
-// Public Methods
+
+int	getLevel(std::string level)
+{
+	const std::string	levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+	int					levelNumber = 4;
+
+	for (int i = 0; i < 4 && levelNumber == 4; i++)
+	{
+		if (level == levels[i])
+			levelNumber = i;
+	}
+	return (levelNumber);
+}
+
 void	Harl::complain(std::string level)
 {
-	void    (Harl::*functionPTRS[])( void ) = 
-	{&Harl::debug, 
-	&Harl::info,
-	 &Harl::warning, 
-	 &Harl::error};
-	 
-	std::string complains[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+	const function_p	complains[4] = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
+	int					levelNumber = getLevel(level);
 
-	int i = 0;
-	for (; i < 4; i++)
-	{
-		if (complains[i] == level)
-			break ;
-	}
-	switch(i)
-	{
-		case(0):
-			(this->*functionPTRS[0])();
-			// __attribute__ ((fallthrough));// otherwise linux won't compile
-		case(1):
-			(this->*functionPTRS[1])();
-			// __attribute__ ((fallthrough));
-		case(2):
-			(this->*functionPTRS[2])();
-			// __attribute__ ((fallthrough));
-		case(3):
-			(this->*functionPTRS[3])();
-			break;
-
-		default:
-			std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
-			break;
-	}
+	if (levelNumber < 4)
+		(this->*(complains[levelNumber]))();
+	else
+		std::cout << "[ INVALID ]\nInvalid level. Try again." << std::endl << std::endl;
 }
-// Getter
 
-// Setter
+// Functionp x;
+//void doSomething() { printf("Hello there\n"); }
+//x = &doSomething;
+
+//x(); prints "Hello there"
+
 

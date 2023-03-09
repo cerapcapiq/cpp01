@@ -13,19 +13,20 @@
 class Harl
 {
 	private:
-		void	debug(void);
-		void	info(void);
-		void	warning(void);
-		void	error(void);
+		void	debug(void) ;
+		void	info(void) ;
+		void	warning(void) ;
+		void	error(void) ;
 
 	public:
-	// Constructors
+
 		Harl();
-
-	// Deconstructors
 		~Harl();
-
-	// Public Methods
-		void	complain(std::string level);
+		void complain(std::string level);
 
 };
+
+typedef void (Harl::*function_p)(void) ;
+int		getLevel(std::string level);
+
+//  aliasing Function_p to void(*)().
